@@ -12,7 +12,7 @@ import sys
 # sys.path.insert(0, os.path.abspath('../'))
 from cvxpower.cvxpower import *
 
-matplotlib.rc("figure", figsize=(16,6))
+# matplotlib.rc("figure", figsize=(16,6))
 matplotlib.rc("lines", linewidth=2)
 #matplotlib.rc("font", serif='Computer Modern Roman')
 matplotlib.rcParams['mathtext.fontset'] = 'cm'
@@ -34,8 +34,8 @@ train = pd.read_pickle('forecaster_params/wind_power_train.pickle')
 test = pd.read_pickle('forecaster_params/wind_power_test.pickle')
 p_wind = pd.concat([train,test])
 train_residuals = pd.read_pickle('forecaster_params/residual_samples.pickle')
-del train
-del test
+# del train
+# del test
 
 
 ########################################################################################

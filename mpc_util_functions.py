@@ -9,8 +9,8 @@ from matplotlib import pyplot as plt
 # import local copy of cvxpower
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../'))
-from cvxpower import *
+# sys.path.insert(0, os.path.abspath('../'))
+from cvxpower.cvxpower import *
 
 matplotlib.rc("figure", figsize=(16,6))
 matplotlib.rc("lines", linewidth=2)
@@ -27,12 +27,13 @@ figsize=(8,5)
 
 
 
-baseline = pd.read_pickle('wind_baseline.pickle')
-autoreg_residual_params = pd.read_pickle('residual_params.pickle')
-sigma_residual_errors = pd.read_pickle('sigma_epsilon.pickle')
-train = pd.read_pickle('wind_power_train.pickle')
-test = pd.read_pickle('wind_power_test.pickle')
+baseline = pd.read_pickle('forecaster_params/wind_baseline.pickle')
+autoreg_residual_params = pd.read_pickle('forecaster_params/residual_params.pickle')
+sigma_residual_errors = pd.read_pickle('forecaster_params/sigma_epsilon.pickle')
+train = pd.read_pickle('forecaster_params/wind_power_train.pickle')
+test = pd.read_pickle('forecaster_params/wind_power_test.pickle')
 p_wind = pd.concat([train,test])
+train_residuals = pd.read_pickle('forecaster_params/residual_samples.pickle')
 del train
 del test
 
@@ -40,12 +41,21 @@ del test
 ########################################################################################
 
 # CONSTANTS
+# Use a 10:1 ratio for wind power to storage power and a 1:1 ratio for storage capacity (hours) to power
+wind_power_max = 16.  
+wind_power_min = 0.  
+
+# Realistic numbers for battery (makes for uninteresting optimization problems)
+# storage_capacity = wind_power_max / 10 # MWh, using a 10:1 ratio with wind power
+# battery_charge_max = storage_capacity # a full charge in 1 hour
+# battery_discharge_max = storage_capacity # a full discharge in 1 hour
+
+# Going back to original paper numbers, problem isn't interesting when battery is so small
 storage_capacity = 100 # MWh
+battery_charge_max = storage_capacity / 10. # a full charge in 10 hours
+battery_discharge_max = storage_capacity / 10. # a full discharge in 10 hours
+
 initial_storage = storage_capacity // 2
-battery_charge_max = storage_capacity /10. # a full charge in 10 hours
-battery_discharge_max = storage_capacity /10. # a full discharge in 10 hours
-wind_power_max = 16.  # TODO delete?
-wind_power_min = 0.  # TODO delete?
 
 gas_power_max = 12  #MW
 gas_power_min = 0 #MW
@@ -141,7 +151,7 @@ def print_and_plot_stats(wind_power_avail, wind_power_used, gas_power, output, c
     plt.ylabel('Power (MW)')
     plt.xlabel('time')
     #plt.gcf().autofmt_xdate()
-    plt.savefig('wind_curtailment.pdf')
+    # plt.savefig('wind_curtailment.pdf')
 
     total_output = sum(output)/len(output) 
     total_wind_power_avail = sum(wind_power_avail)/len(output)

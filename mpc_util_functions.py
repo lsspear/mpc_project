@@ -15,9 +15,9 @@ from cvxpower.cvxpower import *
 # matplotlib.rc("figure", figsize=(16,6))
 matplotlib.rc("lines", linewidth=2)
 #matplotlib.rc("font", serif='Computer Modern Roman')
-matplotlib.rcParams['mathtext.fontset'] = 'cm'
+# matplotlib.rcParams['mathtext.fontset'] = 'cm'
 # matplotlib.rc('font', **{'family': 'serif', 'serif': ['Computer Modern']})
-matplotlib.rc('text', usetex=True)
+# matplotlib.rc('text', usetex=True)
 
 graphdir = './'
 figsize=(8,5)

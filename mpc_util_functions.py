@@ -140,16 +140,16 @@ def print_and_plot_stats(wind_power_avail, wind_power_used, gas_power, output, c
     assert len(output) == len(wind_power_used)
     assert len(output) == len(gas_power)
 
-    plt.figure(figsize=(9,3.5))
-    plt.subplot2grid((10,1), (0,0), rowspan=9)
-    plt.plot(wind_power_avail.index, wind_power_avail.values, label='avail.', alpha=.8)
-    pd.Series(data = wind_power_used, 
-              index = wind_power_avail.index).plot(label='used', alpha=.8)
-    #output.plot(label='target', style='--', color='k', alpha=.8)
-    plt.legend(loc='lower left')
-    plt.gca().set_xlim(['01-01-2012', '01-31-2012'])
-    plt.ylabel('Power (MW)')
-    plt.xlabel('time')
+#     plt.figure(figsize=(9,3.5))
+#     plt.subplot2grid((10,1), (0,0), rowspan=9)
+#     plt.plot(wind_power_avail.index, wind_power_avail.values, label='avail.', alpha=.8)
+#     pd.Series(data = wind_power_used, 
+#               index = wind_power_avail.index).plot(label='used', alpha=.8)
+#     #output.plot(label='target', style='--', color='k', alpha=.8)
+#     plt.legend(loc='lower left')
+#     plt.gca().set_xlim(['01-01-2012', '01-31-2012'])
+#     plt.ylabel('Power (MW)')
+#     plt.xlabel('time')
     #plt.gcf().autofmt_xdate()
     # plt.savefig('wind_curtailment.pdf')
 
